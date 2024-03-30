@@ -2,16 +2,36 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
         <title>些许风霜</title>
-        <link>https://bitfrost7.github.io/</link>
+        <link>http://localhost:1313/</link>
         <description>Recent content on 些许风霜</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>zh-cn</language>
-        <copyright>bitfrost</copyright><atom:link href="https://bitfrost7.github.io/index.xml" rel="self" type="application/rss+xml" /><item>
+        <copyright>bitfrost</copyright><atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>关于我</title>
+        <link>http://localhost:1313/%E5%85%B3%E4%BA%8E%E6%88%91/</link>
+        <pubDate>Sat, 30 Mar 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/%E5%85%B3%E4%BA%8E%E6%88%91/</guid>
+        <description>&lt;h1 id=&#34;关于我&#34;&gt;
+    &lt;a href=&#34;#%e5%85%b3%e4%ba%8e%e6%88%91&#34;&gt;#&lt;/a&gt;
+    关于我
+&lt;/h1&gt;&lt;p&gt;做过后端，做过前端，做过运维，目前在学习全栈&lt;/p&gt;
+&lt;h1 id=&#34;这个网站&#34;&gt;
+    &lt;a href=&#34;#%e8%bf%99%e4%b8%aa%e7%bd%91%e7%ab%99&#34;&gt;#&lt;/a&gt;
+    这个网站
+&lt;/h1&gt;&lt;p&gt;记录学习点滴&lt;/p&gt;
+&lt;h1 id=&#34;联系方式&#34;&gt;
+    &lt;a href=&#34;#%e8%81%94%e7%b3%bb%e6%96%b9%e5%bc%8f&#34;&gt;#&lt;/a&gt;
+    联系方式
+&lt;/h1&gt;&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;mailto:15591017398@163.com&#34; &gt;15591017398@163.com&lt;/a&gt;&lt;/p&gt;
+</description>
+        </item>
+        <item>
         <title>设计模式-单例</title>
-        <link>https://bitfrost7.github.io/p/design-patterns/singleton/</link>
+        <link>http://localhost:1313/p/design-patterns/singleton/</link>
         <pubDate>Fri, 29 Mar 2024 22:24:18 +0800</pubDate>
         
-        <guid>https://bitfrost7.github.io/p/design-patterns/singleton/</guid>
+        <guid>http://localhost:1313/p/design-patterns/singleton/</guid>
         <description>&lt;h2 id=&#34;介绍&#34;&gt;
     &lt;a href=&#34;#%e4%bb%8b%e7%bb%8d&#34;&gt;#&lt;/a&gt;
     介绍
@@ -159,10 +179,10 @@
         </item>
         <item>
         <title>Golang学习-container库</title>
-        <link>https://bitfrost7.github.io/p/golang/container/</link>
+        <link>http://localhost:1313/p/golang/container/</link>
         <pubDate>Fri, 29 Mar 2024 22:04:44 +0800</pubDate>
         
-        <guid>https://bitfrost7.github.io/p/golang/container/</guid>
+        <guid>http://localhost:1313/p/golang/container/</guid>
         <description>&lt;h2 id=&#34;标准库容器&#34;&gt;
     &lt;a href=&#34;#%e6%a0%87%e5%87%86%e5%ba%93%e5%ae%b9%e5%99%a8&#34;&gt;#&lt;/a&gt;
     标准库容器
@@ -199,9 +219,9 @@
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;h3 id=&#34;list常用a&#34;&gt;
-    &lt;a href=&#34;#list%e5%b8%b8%e7%94%a8a&#34;&gt;#&lt;/a&gt;
-    List常用a
+&lt;/div&gt;&lt;h3 id=&#34;list常用&#34;&gt;
+    &lt;a href=&#34;#list%e5%b8%b8%e7%94%a8&#34;&gt;#&lt;/a&gt;
+    List常用
 &lt;/h3&gt;&lt;table&gt;
 &lt;thead&gt;
 &lt;tr&gt;
@@ -253,14 +273,17 @@
 &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
-</description>
+&lt;h3 id=&#34;heap简介&#34;&gt;
+    &lt;a href=&#34;#heap%e7%ae%80%e4%bb%8b&#34;&gt;#&lt;/a&gt;
+    Heap简介
+&lt;/h3&gt;</description>
         </item>
         <item>
         <title>Golang学习-哈希表</title>
-        <link>https://bitfrost7.github.io/p/golang/hashmap/</link>
+        <link>http://localhost:1313/p/golang/hashmap/</link>
         <pubDate>Fri, 29 Mar 2024 21:33:25 +0800</pubDate>
         
-        <guid>https://bitfrost7.github.io/p/golang/hashmap/</guid>
+        <guid>http://localhost:1313/p/golang/hashmap/</guid>
         <description>&lt;h2 id=&#34;哈希表概念&#34;&gt;
     &lt;a href=&#34;#%e5%93%88%e5%b8%8c%e8%a1%a8%e6%a6%82%e5%bf%b5&#34;&gt;#&lt;/a&gt;
     哈希表概念
@@ -625,10 +648,10 @@
         </item>
         <item>
         <title>Golang学习-字符串</title>
-        <link>https://bitfrost7.github.io/p/golang/string/</link>
+        <link>http://localhost:1313/p/golang/string/</link>
         <pubDate>Fri, 29 Mar 2024 18:36:49 +0800</pubDate>
         
-        <guid>https://bitfrost7.github.io/p/golang/string/</guid>
+        <guid>http://localhost:1313/p/golang/string/</guid>
         <description>&lt;h2 id=&#34;字符串基本使用&#34;&gt;
     &lt;a href=&#34;#%e5%ad%97%e7%ac%a6%e4%b8%b2%e5%9f%ba%e6%9c%ac%e4%bd%bf%e7%94%a8&#34;&gt;#&lt;/a&gt;
     字符串基本使用
@@ -917,10 +940,10 @@
         </item>
         <item>
         <title>Golang学习-基础数据类型</title>
-        <link>https://bitfrost7.github.io/p/golang/type/</link>
+        <link>http://localhost:1313/p/golang/type/</link>
         <pubDate>Fri, 29 Mar 2024 18:30:03 +0800</pubDate>
         
-        <guid>https://bitfrost7.github.io/p/golang/type/</guid>
+        <guid>http://localhost:1313/p/golang/type/</guid>
         <description>&lt;h2 id=&#34;go中的数据类型介绍&#34;&gt;
     &lt;a href=&#34;#go%e4%b8%ad%e7%9a%84%e6%95%b0%e6%8d%ae%e7%b1%bb%e5%9e%8b%e4%bb%8b%e7%bb%8d&#34;&gt;#&lt;/a&gt;
     Go中的数据类型介绍
@@ -1170,10 +1193,10 @@
         </item>
         <item>
         <title>Golang学习-数组和切片</title>
-        <link>https://bitfrost7.github.io/p/golang/slice/</link>
+        <link>http://localhost:1313/p/golang/slice/</link>
         <pubDate>Fri, 29 Mar 2024 16:40:30 +0800</pubDate>
         
-        <guid>https://bitfrost7.github.io/p/golang/slice/</guid>
+        <guid>http://localhost:1313/p/golang/slice/</guid>
         <description>&lt;h2 id=&#34;array数组&#34;&gt;
     &lt;a href=&#34;#array%e6%95%b0%e7%bb%84&#34;&gt;#&lt;/a&gt;
     Array数组
@@ -1409,10 +1432,10 @@
         </item>
         <item>
         <title>Golang学习-关键字</title>
-        <link>https://bitfrost7.github.io/p/golang/</link>
+        <link>http://localhost:1313/p/golang/</link>
         <pubDate>Fri, 29 Mar 2024 15:54:28 +0800</pubDate>
         
-        <guid>https://bitfrost7.github.io/p/golang/</guid>
+        <guid>http://localhost:1313/p/golang/</guid>
         <description>&lt;h2 id=&#34;关键字&#34;&gt;
     &lt;a href=&#34;#%e5%85%b3%e9%94%ae%e5%ad%97&#34;&gt;#&lt;/a&gt;
     关键字
@@ -1661,27 +1684,18 @@
         </item>
         <item>
         <title>归档</title>
-        <link>https://bitfrost7.github.io/archives/</link>
+        <link>http://localhost:1313/archives/</link>
         <pubDate>Tue, 28 May 2019 00:00:00 +0000</pubDate>
         
-        <guid>https://bitfrost7.github.io/archives/</guid>
+        <guid>http://localhost:1313/archives/</guid>
         <description></description>
         </item>
         <item>
-        <title>关于</title>
-        <link>https://bitfrost7.github.io/%E5%85%B3%E4%BA%8E/</link>
-        <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-        
-        <guid>https://bitfrost7.github.io/%E5%85%B3%E4%BA%8E/</guid>
-        <description>&lt;p&gt;This is a test page for i18n support.&lt;/p&gt;
-</description>
-        </item>
-        <item>
         <title>链接</title>
-        <link>https://bitfrost7.github.io/%E9%93%BE%E6%8E%A5/</link>
+        <link>http://localhost:1313/%E9%93%BE%E6%8E%A5/</link>
         <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
         
-        <guid>https://bitfrost7.github.io/%E9%93%BE%E6%8E%A5/</guid>
+        <guid>http://localhost:1313/%E9%93%BE%E6%8E%A5/</guid>
         <description>&lt;p&gt;To use this feature, add &lt;code&gt;links&lt;/code&gt; section to frontmatter.&lt;/p&gt;
 &lt;p&gt;This page&amp;rsquo;s frontmatter:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
@@ -1713,10 +1727,10 @@
         </item>
         <item>
         <title>搜索</title>
-        <link>https://bitfrost7.github.io/search/</link>
+        <link>http://localhost:1313/search/</link>
         <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
         
-        <guid>https://bitfrost7.github.io/search/</guid>
+        <guid>http://localhost:1313/search/</guid>
         <description></description>
         </item>
         
