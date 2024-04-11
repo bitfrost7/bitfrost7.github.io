@@ -2,16 +2,16 @@
 <html lang="zh-cn" dir="ltr">
     <head><meta charset='utf-8'>
 <meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="介绍Go中context包的使用">
-<title>Golang学习- context使用</title>
+<title>Golang学习- 上下文context</title>
 
 <link rel='canonical' href='https://bitfrost7.github.io/p/golang/context/'>
 
-<link rel="stylesheet" href="/scss/style.min.8e60baf4cd3fc55968717a6e39762f4d28ed7ef6007566b6c7970ad0fe907198.css"><meta property='og:title' content="Golang学习- context使用">
+<link rel="stylesheet" href="/scss/style.min.8e60baf4cd3fc55968717a6e39762f4d28ed7ef6007566b6c7970ad0fe907198.css"><meta property='og:title' content="Golang学习- 上下文context">
 <meta property='og:description' content="介绍Go中context包的使用">
 <meta property='og:url' content='https://bitfrost7.github.io/p/golang/context/'>
 <meta property='og:site_name' content='些许风霜'>
 <meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='golang' /><meta property='article:tag' content='并发编程' /><meta property='article:published_time' content='2024-04-02T17:32:17&#43;08:00'/><meta property='article:modified_time' content='2024-04-02T17:32:17&#43;08:00'/>
-<meta name="twitter:title" content="Golang学习- context使用">
+<meta name="twitter:title" content="Golang学习- 上下文context">
 <meta name="twitter:description" content="介绍Go中context包的使用">
     </head>
     <body class="
@@ -243,9 +243,11 @@
         <div class="widget--toc">
             <nav id="TableOfContents">
   <ol>
-    <li><a href="#context介绍">Context介绍</a>
+    <li><a href="#上下文context">上下文Context</a>
       <ol>
-        <li><a href="#功能介绍">功能介绍：</a></li>
+        <li><a href="#什么是context">什么是context？</a></li>
+        <li><a href="#context使用">context使用</a></li>
+        <li><a href="#context源码解析">context源码解析</a></li>
       </ol>
     </li>
   </ol>
@@ -266,7 +268,7 @@
 
     <div class="article-title-wrapper">
         <h2 class="article-title">
-            <a href="/p/golang/context/">Golang学习- context使用</a>
+            <a href="/p/golang/context/">Golang学习- 上下文context</a>
         </h2>
     
         
@@ -307,7 +309,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 1 分钟
+                    阅读时长: 3 分钟
                 </time>
             </div>
         
@@ -322,19 +324,110 @@
     <section class="article-content">
     
     
-    <h2 id="context介绍">
-    <a href="#context%e4%bb%8b%e7%bb%8d">#</a>
-    Context介绍
-</h2><p>在Go的并发控制中，经常会需要用到父协程和子协程进行通信或者控制，比如说控制协程结束，超时控制，参数传递等场景。与之对应的，context.Context提供了 BackGround，WithCancel，WithTimeout ，WithValue 四种 context。</p>
-<h3 id="功能介绍">
-    <a href="#%e5%8a%9f%e8%83%bd%e4%bb%8b%e7%bb%8d">#</a>
-    功能介绍：
-</h3><ul>
-<li>BackGround，所有context的root，其他context都应该从它继承。</li>
-<li>WithCancel，基于父context创建一个可取消的context，当 cancelFunc() 被调用时，所有监听ctx.Done()的接收者都会立刻解除阻塞，并且同时会递归的取消所有子context。</li>
-<li>WithTimeout ，基于父context创建一个带有定时器的context，同样也会返回cancelFunc来显式取消</li>
-<li>WithValue，基于父context创建一个带有kv对的context，并且可以继承父context的所有，包括kv对，定时器以及cancelFunc，子context可以对父context的kv对进行修改。</li>
+    <h2 id="上下文context">
+    <a href="#%e4%b8%8a%e4%b8%8b%e6%96%87context">#</a>
+    上下文Context
+</h2><h3 id="什么是context">
+    <a href="#%e4%bb%80%e4%b9%88%e6%98%afcontext">#</a>
+    什么是context？
+</h3><p>在Go 语言中，<code>context.Context</code> 是一个内置接口，从 Go 1.7 版本开始引入，主要用于处理涉及多个 goroutine（轻量级线程）间的协作、取消信号传递、超时控制以及携带请求级别的相关数据。<code>context.Context</code> 可以看作是一个封装了任务执行环境的对象，它允许在整个协程树中传播这些环境信息，并且提供了一种安全的方式来通知所有相关 goroutine 应该尽早结束其任务。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="c1">// context 接口定义
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">type</span> <span class="nx">Context</span> <span class="kd">interface</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// Deadline()返回一个完成工作的截止时间，表示上下文应该被取消的时间。
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">// 如果 `ok==false` 表示没有设置截止时间。
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="nf">Deadline</span><span class="p">()</span> <span class="p">(</span><span class="nx">deadline</span> <span class="nx">time</span><span class="p">.</span><span class="nx">Time</span><span class="p">,</span> <span class="nx">ok</span> <span class="kt">bool</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="c1">// Done()返回一个 Channel，这个 Channel 会在当前工作完成时被关闭，表示上下文应该被取消。
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">// 如果无法取消此上下文，则 Done 可能返回 nil。多次调用 Done 方法会返回同一个 Channel。
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="nf">Done</span><span class="p">()</span> <span class="o">&lt;-</span><span class="kd">chan</span> <span class="kd">struct</span><span class="p">{}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">// Err()返回Context结束的原因，它只会在Done方法对应的Channel关闭时返回非空值。
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">// 如果Context被取消，会返回context.Canceled错误；
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">// 如果Context超时，会返回context.DeadlineExceeded错误。
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="nf">Err</span><span class="p">()</span> <span class="kt">error</span>
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">    <span class="c1">// Value()从Context中获取键对应的值。
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">// 如果未设置key对应的值则返回nil。以相同key多次调用会返回相同的结果。
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="nf">Value</span><span class="p">(</span><span class="nx">key</span> <span class="kd">interface</span><span class="p">{})</span> <span class="kd">interface</span><span class="p">{}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="context使用">
+    <a href="#context%e4%bd%bf%e7%94%a8">#</a>
+    context使用
+</h3><p><code>context</code>包主要提供了两种方式创建<code>context</code>:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="nx">context</span><span class="p">.</span><span class="nf">Backgroud</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="nx">context</span><span class="p">.</span><span class="nf">TODO</span><span class="p">()</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这两个函数其实只是互为别名，没有差别，官方给的定义是：</p>
+<ul>
+<li><code>context.Background</code> 是上下文的默认值，所有其他的上下文都应该从它衍生出来。</li>
+<li><code>context.TODO</code> 应该只在不确定应该使用哪种上下文时使用；
+所以在大多数情况下，我们都使用<code>context.Background</code>作为起始的上下文向下传递。</li>
 </ul>
+<p>在具体使用的时候，<code>context</code>包提供了四种<code>With</code>函数来派生出我们需要的上下文：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="c1">// WithCancel 返回一个带有终止控制的context
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">func</span> <span class="nf">WithCancel</span><span class="p">(</span><span class="nx">parent</span> <span class="nx">Context</span><span class="p">)</span> <span class="p">(</span><span class="nx">ctx</span> <span class="nx">Context</span><span class="p">,</span> <span class="nx">cancel</span> <span class="nx">CancelFunc</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="c1">// WithDeadline 返回一个带有定时器的context，也带有终止控制
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">func</span> <span class="nf">WithDeadline</span><span class="p">(</span><span class="nx">parent</span> <span class="nx">Context</span><span class="p">,</span> <span class="nx">deadline</span> <span class="nx">time</span><span class="p">.</span><span class="nx">Time</span><span class="p">)</span> <span class="p">(</span><span class="nx">Context</span><span class="p">,</span> <span class="nx">CancelFunc</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="c1">// WithTimeout 返回一个带有超时控制的context，也带有终止控制
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">func</span> <span class="nf">WithTimeout</span><span class="p">(</span><span class="nx">parent</span> <span class="nx">Context</span><span class="p">,</span> <span class="nx">timeout</span> <span class="nx">time</span><span class="p">.</span><span class="nx">Duration</span><span class="p">)</span> <span class="p">(</span><span class="nx">Context</span><span class="p">,</span> <span class="nx">CancelFunc</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="c1">// WithValue 返回一个带有参数的context
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">func</span> <span class="nf">WithValue</span><span class="p">(</span><span class="nx">parent</span> <span class="nx">Context</span><span class="p">,</span> <span class="nx">key</span><span class="p">,</span> <span class="nx">val</span> <span class="kd">interface</span><span class="p">{})</span> <span class="nx">Context</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>通常我们先创建一个空<code>context</code>，再由此派生出我们需要的<code>context</code>，就创建出来了一颗<code>context</code>树。
+在<code>context</code>的派生关系中：</p>
+<ul>
+<li>当父context取消时，子context也都会被取消；</li>
+<li>当父context设置参数时，子context也能读取到这个参数，但key只能被设置一次，不能被修改。</li>
+</ul>
+<h3 id="context源码解析">
+    <a href="#context%e6%ba%90%e7%a0%81%e8%a7%a3%e6%9e%90">#</a>
+    context源码解析
+</h3><p>在源码中具体有6种结构的context：</p>
 
 </section>
 
