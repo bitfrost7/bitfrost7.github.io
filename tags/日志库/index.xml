@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
         <title>日志库 on 些许风霜</title>
-        <link>https://bitfrost7.github.io/tags/%E6%97%A5%E5%BF%97%E5%BA%93/</link>
+        <link>http://localhost:1313/tags/%E6%97%A5%E5%BF%97%E5%BA%93/</link>
         <description>Recent content in 日志库 on 些许风霜</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>zh-cn</language>
         <copyright>bitfrost</copyright>
-        <lastBuildDate>Mon, 15 Apr 2024 13:57:43 +0800</lastBuildDate><atom:link href="https://bitfrost7.github.io/tags/%E6%97%A5%E5%BF%97%E5%BA%93/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Mon, 15 Apr 2024 13:57:43 +0800</lastBuildDate><atom:link href="http://localhost:1313/tags/%E6%97%A5%E5%BF%97%E5%BA%93/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>Golang学习-zap日志库</title>
-        <link>https://bitfrost7.github.io/p/golang/libs/zap/</link>
+        <link>http://localhost:1313/p/golang/libs/zap/</link>
         <pubDate>Mon, 15 Apr 2024 13:57:43 +0800</pubDate>
         
-        <guid>https://bitfrost7.github.io/p/golang/libs/zap/</guid>
+        <guid>http://localhost:1313/p/golang/libs/zap/</guid>
         <description>&lt;h2 id=&#34;zap介绍&#34;&gt;
     &lt;a href=&#34;#zap%e4%bb%8b%e7%bb%8d&#34;&gt;#&lt;/a&gt;
     Zap介绍

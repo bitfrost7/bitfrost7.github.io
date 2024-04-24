@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html lang="zh-cn" dir="ltr">
-    <head><meta charset='utf-8'>
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset='utf-8'>
 <meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="dpdk学习01—环境搭建">
 <title>dpdk学习01—环境搭建</title>
 
-<link rel='canonical' href='https://bitfrost7.github.io/p/network/dpdk/01/'>
+<link rel='canonical' href='http://localhost:1313/p/network/dpdk/01/'>
 
 <link rel="stylesheet" href="/scss/style.min.8e60baf4cd3fc55968717a6e39762f4d28ed7ef6007566b6c7970ad0fe907198.css"><meta property='og:title' content="dpdk学习01—环境搭建">
 <meta property='og:description' content="dpdk学习01—环境搭建">
-<meta property='og:url' content='https://bitfrost7.github.io/p/network/dpdk/01/'>
+<meta property='og:url' content='http://localhost:1313/p/network/dpdk/01/'>
 <meta property='og:site_name' content='些许风霜'>
 <meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='dpdk' /><meta property='article:published_time' content='2024-04-22T19:16:59&#43;08:00'/><meta property='article:modified_time' content='2024-04-22T19:16:59&#43;08:00'/>
 <meta name="twitter:title" content="dpdk学习01—环境搭建">
@@ -311,7 +311,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 5 分钟
+                    阅读时长: 4 分钟
                 </time>
             </div>
         
@@ -377,234 +377,200 @@ dpdk安装时已经自带了工具，可以很方便的配置：<br>
 </ol>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">  1
-</span><span class="lnt">  2
-</span><span class="lnt">  3
-</span><span class="lnt">  4
-</span><span class="lnt">  5
-</span><span class="lnt">  6
-</span><span class="lnt">  7
-</span><span class="lnt">  8
-</span><span class="lnt">  9
-</span><span class="lnt"> 10
-</span><span class="lnt"> 11
-</span><span class="lnt"> 12
-</span><span class="lnt"> 13
-</span><span class="lnt"> 14
-</span><span class="lnt"> 15
-</span><span class="lnt"> 16
-</span><span class="lnt"> 17
-</span><span class="lnt"> 18
-</span><span class="lnt"> 19
-</span><span class="lnt"> 20
-</span><span class="lnt"> 21
-</span><span class="lnt"> 22
-</span><span class="lnt"> 23
-</span><span class="lnt"> 24
-</span><span class="lnt"> 25
-</span><span class="lnt"> 26
-</span><span class="lnt"> 27
-</span><span class="lnt"> 28
-</span><span class="lnt"> 29
-</span><span class="lnt"> 30
-</span><span class="lnt"> 31
-</span><span class="lnt"> 32
-</span><span class="lnt"> 33
-</span><span class="lnt"> 34
-</span><span class="lnt"> 35
-</span><span class="lnt"> 36
-</span><span class="lnt"> 37
-</span><span class="lnt"> 38
-</span><span class="lnt"> 39
-</span><span class="lnt"> 40
-</span><span class="lnt"> 41
-</span><span class="lnt"> 42
-</span><span class="lnt"> 43
-</span><span class="lnt"> 44
-</span><span class="lnt"> 45
-</span><span class="lnt"> 46
-</span><span class="lnt"> 47
-</span><span class="lnt"> 48
-</span><span class="lnt"> 49
-</span><span class="lnt"> 50
-</span><span class="lnt"> 51
-</span><span class="lnt"> 52
-</span><span class="lnt"> 53
-</span><span class="lnt"> 54
-</span><span class="lnt"> 55
-</span><span class="lnt"> 56
-</span><span class="lnt"> 57
-</span><span class="lnt"> 58
-</span><span class="lnt"> 59
-</span><span class="lnt"> 60
-</span><span class="lnt"> 61
-</span><span class="lnt"> 62
-</span><span class="lnt"> 63
-</span><span class="lnt"> 64
-</span><span class="lnt"> 65
-</span><span class="lnt"> 66
-</span><span class="lnt"> 67
-</span><span class="lnt"> 68
-</span><span class="lnt"> 69
-</span><span class="lnt"> 70
-</span><span class="lnt"> 71
-</span><span class="lnt"> 72
-</span><span class="lnt"> 73
-</span><span class="lnt"> 74
-</span><span class="lnt"> 75
-</span><span class="lnt"> 76
-</span><span class="lnt"> 77
-</span><span class="lnt"> 78
-</span><span class="lnt"> 79
-</span><span class="lnt"> 80
-</span><span class="lnt"> 81
-</span><span class="lnt"> 82
-</span><span class="lnt"> 83
-</span><span class="lnt"> 84
-</span><span class="lnt"> 85
-</span><span class="lnt"> 86
-</span><span class="lnt"> 87
-</span><span class="lnt"> 88
-</span><span class="lnt"> 89
-</span><span class="lnt"> 90
-</span><span class="lnt"> 91
-</span><span class="lnt"> 92
-</span><span class="lnt"> 93
-</span><span class="lnt"> 94
-</span><span class="lnt"> 95
-</span><span class="lnt"> 96
-</span><span class="lnt"> 97
-</span><span class="lnt"> 98
-</span><span class="lnt"> 99
-</span><span class="lnt">100
-</span><span class="lnt">101
-</span><span class="lnt">102
-</span><span class="lnt">103
-</span><span class="lnt">104
-</span><span class="lnt">105
-</span><span class="lnt">106
-</span><span class="lnt">107
-</span><span class="lnt">108
-</span><span class="lnt">109
-</span><span class="lnt">110
-</span><span class="lnt">111
-</span><span class="lnt">112
-</span><span class="lnt">113
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span><span class="lnt">71
+</span><span class="lnt">72
+</span><span class="lnt">73
+</span><span class="lnt">74
+</span><span class="lnt">75
+</span><span class="lnt">76
+</span><span class="lnt">77
+</span><span class="lnt">78
+</span><span class="lnt">79
+</span><span class="lnt">80
+</span><span class="lnt">81
+</span><span class="lnt">82
+</span><span class="lnt">83
+</span><span class="lnt">84
+</span><span class="lnt">85
+</span><span class="lnt">86
+</span><span class="lnt">87
+</span><span class="lnt">88
+</span><span class="lnt">89
+</span><span class="lnt">90
+</span><span class="lnt">91
+</span><span class="lnt">92
+</span><span class="lnt">93
+</span><span class="lnt">94
+</span><span class="lnt">95
+</span><span class="lnt">96
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">root@ubuntu:~# cat scripts/dpdk-run.sh
-</span></span><span class="line"><span class="cl"><span class="c1">#!/bin/bash</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># var</span>
-</span></span><span class="line"><span class="cl"><span class="nv">down_nics</span><span class="o">=()</span>
-</span></span><span class="line"><span class="cl"><span class="nv">choice</span><span class="o">=</span><span class="s2">&#34;&#34;</span>
-</span></span><span class="line"><span class="cl"><span class="nv">selected_nics</span><span class="o">=()</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># 检查并输出DOWN状态的网络接口</span>
-</span></span><span class="line"><span class="cl"><span class="k">function</span> find_down_nics <span class="o">{</span>
-</span></span><span class="line"><span class="cl">    ip a <span class="p">|</span> grep <span class="s1">&#39;ens.*DOWN&#39;</span> <span class="p">|</span> awk -F: <span class="s1">&#39;{print $2}&#39;</span> <span class="p">|</span> tr -d <span class="s1">&#39; &#39;</span>
-</span></span><span class="line"><span class="cl"><span class="o">}</span>
-</span></span><span class="line"><span class="cl"><span class="nv">down_nics</span><span class="o">=(</span><span class="k">$(</span>find_down_nics<span class="k">)</span><span class="o">)</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># 检查是否有DOWN的接口</span>
-</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="o">[</span> <span class="si">${#</span><span class="nv">down_nics</span><span class="p">[@]</span><span class="si">}</span> -eq <span class="m">0</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
-</span></span><span class="line"><span class="cl">    <span class="nb">echo</span> <span class="s2">&#34;没有找到DOWN状态的网络接口。&#34;</span>
-</span></span><span class="line"><span class="cl">    <span class="nb">exit</span> <span class="m">0</span>
-</span></span><span class="line"><span class="cl"><span class="k">fi</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># 打印选项</span>
-</span></span><span class="line"><span class="cl"><span class="nb">echo</span> <span class="s2">&#34;请选择DOWN的网络接口：&#34;</span>
-</span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="o">((</span><span class="nv">i</span><span class="o">=</span>0<span class="p">;</span> i&lt;<span class="si">${#</span><span class="nv">down_nics</span><span class="p">[@]</span><span class="si">}</span><span class="p">;</span> i++<span class="o">))</span><span class="p">;</span> <span class="k">do</span>
-</span></span><span class="line"><span class="cl">    <span class="nb">echo</span> <span class="s2">&#34;</span><span class="k">$((</span>i+1<span class="k">))</span><span class="s2">. </span><span class="si">${</span><span class="nv">down_nics</span><span class="p">[i]</span><span class="si">}</span><span class="s2">&#34;</span>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="cp">#!/bin/bash
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 获取所有网卡信息并存储为数组</span>
+</span></span><span class="line"><span class="cl"><span class="nv">nics</span><span class="o">=(</span><span class="k">$(</span>ip addr show <span class="p">|</span> grep ens <span class="p">|</span> awk <span class="s1">&#39;/^[0-9]+:/ {print $2}&#39;</span> <span class="p">|</span> sed <span class="s1">&#39;s/://&#39;</span><span class="k">)</span><span class="o">)</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 获取数组的长度</span>
+</span></span><span class="line"><span class="cl"><span class="nv">nic_nums</span><span class="o">=</span><span class="si">${#</span><span class="nv">nics</span><span class="p">[@]</span><span class="si">}</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 循环遍历每个网卡</span>
+</span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="o">((</span><span class="nv">i</span><span class="o">=</span>0<span class="p">;</span> i&lt;nic_nums<span class="p">;</span> i++<span class="o">))</span><span class="p">;</span> <span class="k">do</span>    
+</span></span><span class="line"><span class="cl">    <span class="nv">nic</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">nics</span><span class="p">[i]</span><span class="si">}</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># 获取网卡的 MAC 地址</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">mac</span><span class="o">=</span><span class="k">$(</span>ip addr show <span class="nv">$nic</span> <span class="p">|</span> awk <span class="s1">&#39;/ether/ {print $2}&#39;</span><span class="k">)</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="c1"># 获取网卡的 IP 地址和子网掩码</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">ip</span><span class="o">=</span><span class="k">$(</span>ip addr show <span class="nv">$nic</span> <span class="p">|</span> awk <span class="s1">&#39;/inet / {print $2}&#39;</span><span class="k">)</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="c1"># 输出网卡信息</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">echo</span> <span class="s2">&#34;</span><span class="k">$((</span>i+1<span class="k">))</span><span class="s2">, </span><span class="nv">$nic</span><span class="s2">: (</span><span class="nv">$ip</span><span class="s2"> </span><span class="nv">$mac</span><span class="s2">)&#34;</span>
 </span></span><span class="line"><span class="cl"><span class="k">done</span>
-</span></span><span class="line"><span class="cl"><span class="nb">echo</span> <span class="s2">&#34;</span><span class="k">$((</span> <span class="si">${#</span><span class="nv">down_nics</span><span class="p">[@]</span><span class="si">}</span> <span class="o">+</span> <span class="m">1</span> <span class="k">))</span><span class="s2">. all&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nb">echo</span> <span class="k">$((</span>nic_nums+1<span class="k">))</span>, all
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># 读取用户选择</span>
-</span></span><span class="line"><span class="cl"><span class="nb">read</span> -p <span class="s2">&#34;请输入选项编号： &#34;</span> choice
+</span></span><span class="line"><span class="cl"><span class="nb">read</span> -p <span class="s2">&#34;请选择接口,多个使用空格隔开:&#34;</span> choice
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="o">[</span> <span class="s2">&#34;</span><span class="nv">$choice</span><span class="s2">&#34;</span> <span class="o">==</span> <span class="s2">&#34;</span><span class="k">$((</span> <span class="si">${#</span><span class="nv">down_nics</span><span class="p">[@]</span><span class="si">}</span> <span class="o">+</span> <span class="m">1</span> <span class="k">))</span><span class="s2">&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
-</span></span><span class="line"><span class="cl">    <span class="nb">echo</span> <span class="s2">&#34;您选择了所有DOWN的网络接口。&#34;</span>
-</span></span><span class="line"><span class="cl">    <span class="nv">selected_nics</span><span class="o">=(</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">down_nics</span><span class="p">[@]</span><span class="si">}</span><span class="s2">&#34;</span><span class="o">)</span>
-</span></span><span class="line"><span class="cl"><span class="k">else</span>
-</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="o">[[</span> <span class="s2">&#34;</span><span class="nv">$choice</span><span class="s2">&#34;</span> <span class="o">=</span>~ ^<span class="o">[</span>0-9<span class="o">]</span>+$ <span class="o">]]</span> <span class="o">&amp;&amp;</span> <span class="o">[</span> <span class="s2">&#34;</span><span class="nv">$choice</span><span class="s2">&#34;</span> -le <span class="s2">&#34;</span><span class="si">${#</span><span class="nv">down_nics</span><span class="p">[@]</span><span class="si">}</span><span class="s2">&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
-</span></span><span class="line"><span class="cl">        <span class="nb">echo</span> <span class="s2">&#34;您选择了接口：</span><span class="si">${</span><span class="nv">down_nics</span><span class="p">[</span><span class="k">$((</span>choice-1<span class="k">))</span><span class="p">]</span><span class="si">}</span><span class="s2">&#34;</span>
-</span></span><span class="line"><span class="cl">        <span class="nv">selected_nics</span><span class="o">=(</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">down_nics</span><span class="p">[</span><span class="k">$((</span>choice-1<span class="k">))</span><span class="p">]</span><span class="si">}</span><span class="s2">&#34;</span><span class="o">)</span>
+</span></span><span class="line"><span class="cl"><span class="nv">selected_nics</span><span class="o">=()</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 分割用户输入为数组</span>
+</span></span><span class="line"><span class="cl"><span class="nv">IFS</span><span class="o">=</span><span class="s1">&#39; &#39;</span> <span class="nb">read</span> -r -a choice_array <span class="o">&lt;&lt;&lt;</span> <span class="s2">&#34;</span><span class="nv">$choice</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 循环遍历用户选择的接口</span>
+</span></span><span class="line"><span class="cl"><span class="k">for</span> index in <span class="s2">&#34;</span><span class="si">${</span><span class="nv">choice_array</span><span class="p">[@]</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">;</span> <span class="k">do</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="o">[</span> <span class="s2">&#34;</span><span class="nv">$index</span><span class="s2">&#34;</span> -eq <span class="s2">&#34;</span><span class="k">$((</span>nic_nums+1<span class="k">))</span><span class="s2">&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># 用户选择了 &#34;all&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">selected_nics</span><span class="o">+=(</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">nics</span><span class="p">[@]</span><span class="si">}</span><span class="s2">&#34;</span><span class="o">)</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">break</span>
+</span></span><span class="line"><span class="cl">    <span class="k">elif</span> <span class="o">[</span> <span class="s2">&#34;</span><span class="nv">$index</span><span class="s2">&#34;</span> -ge <span class="m">1</span> <span class="o">]</span> <span class="o">&amp;&amp;</span> <span class="o">[</span> <span class="s2">&#34;</span><span class="nv">$index</span><span class="s2">&#34;</span> -le <span class="s2">&#34;</span><span class="nv">$nic_nums</span><span class="s2">&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># 用户选择了具体的网卡</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">selected_nic</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">nics</span><span class="p">[</span><span class="k">$((</span>index-1<span class="k">))</span><span class="p">]</span><span class="si">}</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">selected_nics</span><span class="o">+=(</span><span class="s2">&#34;</span><span class="nv">$selected_nic</span><span class="s2">&#34;</span><span class="o">)</span>
 </span></span><span class="line"><span class="cl">    <span class="k">else</span>
-</span></span><span class="line"><span class="cl">        <span class="nb">echo</span> <span class="s2">&#34;无效的选择。&#34;</span>
-</span></span><span class="line"><span class="cl">        <span class="nb">exit</span> <span class="m">1</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">echo</span> <span class="s2">&#34;无效的选择: </span><span class="nv">$index</span><span class="s2">&#34;</span>
 </span></span><span class="line"><span class="cl">    <span class="k">fi</span>
-</span></span><span class="line"><span class="cl"><span class="k">fi</span>
+</span></span><span class="line"><span class="cl"><span class="k">done</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># log选定的接口信息（包括IP地址）</span>
-</span></span><span class="line"><span class="cl"><span class="k">function</span> log_selected_nics <span class="o">{</span>
-</span></span><span class="line"><span class="cl">    <span class="c1"># 确保bind.log存在</span>
-</span></span><span class="line"><span class="cl">    &gt; bind.log
+</span></span><span class="line"><span class="cl"><span class="c1"># 选择任一驱动</span>
+</span></span><span class="line"><span class="cl"><span class="nv">drives</span><span class="o">=(</span>igb_uio vfio-pci<span class="o">)</span>
+</span></span><span class="line"><span class="cl"><span class="nv">drive_nums</span><span class="o">=</span><span class="si">${#</span><span class="nv">drives</span><span class="p">[@]</span><span class="si">}</span>
+</span></span><span class="line"><span class="cl"><span class="nv">selected_drive</span><span class="o">=</span><span class="s2">&#34;&#34;</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="k">for</span> nic in <span class="s2">&#34;</span><span class="si">${</span><span class="nv">selected_nics</span><span class="p">[@]</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">;</span> <span class="k">do</span>
-</span></span><span class="line"><span class="cl">        <span class="c1"># 尝试获取MAC地址</span>
-</span></span><span class="line"><span class="cl">        <span class="nv">mac_address</span><span class="o">=</span><span class="k">$(</span>ip link show <span class="s2">&#34;</span><span class="nv">$nic</span><span class="s2">&#34;</span> <span class="p">|</span>  awk  <span class="s1">&#39;/link/ {print $2}&#39;</span><span class="k">)</span>
-</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="o">[</span> -z <span class="s2">&#34;</span><span class="nv">$mac_address</span><span class="s2">&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
-</span></span><span class="line"><span class="cl">            <span class="nv">mac_address</span><span class="o">=</span><span class="s2">&#34;无法获取&#34;</span>
-</span></span><span class="line"><span class="cl">        <span class="k">fi</span>
+</span></span><span class="line"><span class="cl"><span class="nb">echo</span> <span class="s2">&#34;可用的驱动：&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="o">((</span><span class="nv">i</span><span class="o">=</span>0<span class="p">;</span> i&lt;drive_nums<span class="p">;</span> i++<span class="o">))</span><span class="p">;</span> <span class="k">do</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">echo</span> <span class="s2">&#34;</span><span class="k">$((</span>i+1<span class="k">))</span><span class="s2">, </span><span class="si">${</span><span class="nv">drives</span><span class="p">[i]</span><span class="si">}</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="k">done</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">        <span class="c1"># 尝试获取IPv4地址</span>
-</span></span><span class="line"><span class="cl">        <span class="nv">ip_address</span><span class="o">=</span><span class="k">$(</span>ip addr show <span class="s2">&#34;</span><span class="nv">$nic</span><span class="s2">&#34;</span> <span class="p">|</span> grep -oP <span class="s1">&#39;(?&lt;=inet\s)\d+(\.\d+){3}/\d+&#39;</span><span class="k">)</span>
-</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="o">[</span> -z <span class="s2">&#34;</span><span class="nv">$ip_address</span><span class="s2">&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
-</span></span><span class="line"><span class="cl">            <span class="nv">ip_address</span><span class="o">=</span><span class="s2">&#34;未分配&#34;</span>
-</span></span><span class="line"><span class="cl">        <span class="k">fi</span>
+</span></span><span class="line"><span class="cl"><span class="nb">read</span> -p <span class="s2">&#34;请选择驱动 [1-</span><span class="nv">$drive_nums</span><span class="s2">]:&#34;</span> drive_choice
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">        <span class="c1"># 将接口名、MAC地址和IP地址写入文件</span>
-</span></span><span class="line"><span class="cl">        <span class="nb">echo</span> <span class="s2">&#34;绑定接口名称: </span><span class="nv">$nic</span><span class="s2">, MAC地址: </span><span class="nv">$mac_address</span><span class="s2">, IP地址: </span><span class="nv">$ip_address</span><span class="s2">&#34;</span>
-</span></span><span class="line"><span class="cl">        <span class="nb">echo</span> <span class="s2">&#34;绑定接口名称: </span><span class="nv">$nic</span><span class="s2">, MAC地址: </span><span class="nv">$mac_address</span><span class="s2">, IP地址: </span><span class="nv">$ip_address</span><span class="s2">&#34;</span> &gt;&gt; bind.log
-</span></span><span class="line"><span class="cl">    <span class="k">done</span>
-</span></span><span class="line"><span class="cl"><span class="o">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">log_selected_nics
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># 将选定的网络接口绑定到dpdk</span>
-</span></span><span class="line"><span class="cl"><span class="k">function</span> bind_dpdk_nics <span class="o">{</span>
-</span></span><span class="line"><span class="cl">    <span class="k">for</span> nic in <span class="s2">&#34;</span><span class="si">${</span><span class="nv">selected_nics</span><span class="p">[@]</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">;</span> <span class="k">do</span>
-</span></span><span class="line"><span class="cl">        <span class="c1"># 检查接口是否存在并尝试绑定</span>
-</span></span><span class="line"><span class="cl">        <span class="k">if</span> ip link show <span class="s2">&#34;</span><span class="nv">$nic</span><span class="s2">&#34;</span> &gt; /dev/null 2&gt;<span class="p">&amp;</span>1<span class="p">;</span> <span class="k">then</span>
-</span></span><span class="line"><span class="cl">            <span class="nb">echo</span> <span class="s2">&#34;正在绑定接口 </span><span class="nv">$nic</span><span class="s2"> 到 vfio-pci...&#34;</span>
-</span></span><span class="line"><span class="cl">            sudo dpdk-devbind.py --bind<span class="o">=</span>vfio-pci <span class="s2">&#34;</span><span class="nv">$nic</span><span class="s2">&#34;</span>
-</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="o">[</span> <span class="nv">$?</span> -eq <span class="m">0</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
-</span></span><span class="line"><span class="cl">                <span class="nb">echo</span> <span class="s2">&#34;接口 </span><span class="nv">$nic</span><span class="s2"> 绑定成功。&#34;</span>
-</span></span><span class="line"><span class="cl">            <span class="k">else</span>
-</span></span><span class="line"><span class="cl">                <span class="nb">echo</span> <span class="s2">&#34;绑定接口 </span><span class="nv">$nic</span><span class="s2"> 失败，请检查错误。&#34;</span>
-</span></span><span class="line"><span class="cl">            <span class="k">fi</span>
-</span></span><span class="line"><span class="cl">        <span class="k">else</span>
-</span></span><span class="line"><span class="cl">            <span class="nb">echo</span> <span class="s2">&#34;接口 </span><span class="nv">$nic</span><span class="s2"> 不存在，跳过绑定。&#34;</span>
-</span></span><span class="line"><span class="cl">        <span class="k">fi</span>
-</span></span><span class="line"><span class="cl">    <span class="k">done</span>
-</span></span><span class="line"><span class="cl"><span class="o">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># 执行绑定操作</span>
-</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="o">[</span> <span class="si">${#</span><span class="nv">selected_nics</span><span class="p">[@]</span><span class="si">}</span> -gt <span class="m">0</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
-</span></span><span class="line"><span class="cl">    bind_dpdk_nics
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="o">[</span> <span class="s2">&#34;</span><span class="nv">$drive_choice</span><span class="s2">&#34;</span> -ge <span class="m">1</span> <span class="o">]</span> <span class="o">&amp;&amp;</span> <span class="o">[</span> <span class="s2">&#34;</span><span class="nv">$drive_choice</span><span class="s2">&#34;</span> -le <span class="s2">&#34;</span><span class="nv">$drive_nums</span><span class="s2">&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">selected_drive</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">drives</span><span class="p">[</span><span class="k">$((</span>drive_choice-1<span class="k">))</span><span class="p">]</span><span class="si">}</span><span class="s2">&#34;</span>
 </span></span><span class="line"><span class="cl"><span class="k">else</span>
-</span></span><span class="line"><span class="cl">    <span class="nb">echo</span> <span class="s2">&#34;没有接口被选中进行绑定。&#34;</span>
-</span></span><span class="line"><span class="cl">    <span class="nb">exit</span> <span class="m">0</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">echo</span> <span class="s2">&#34;无效的选择: </span><span class="nv">$drive_choice</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">exit</span> <span class="m">1</span>
 </span></span><span class="line"><span class="cl"><span class="k">fi</span>
+</span></span><span class="line"><span class="cl"><span class="nb">echo</span> <span class="s2">&#34;您选择的驱动是: </span><span class="nv">$selected_drive</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nb">read</span> -p <span class="s2">&#34;记录网卡信息到 (默认: ./bind.log): &#34;</span> log_file
+</span></span><span class="line"><span class="cl"><span class="nv">log_file</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">log_file</span><span class="k">:-</span><span class="p">./bind.log</span><span class="si">}</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 清空文件</span>
+</span></span><span class="line"><span class="cl">&gt; <span class="nv">$log_file</span>
+</span></span><span class="line"><span class="cl"><span class="k">for</span> nic in <span class="s2">&#34;</span><span class="si">${</span><span class="nv">selected_nics</span><span class="p">[@]</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">;</span> <span class="k">do</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># 记录网卡信息</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">pci</span><span class="o">=</span><span class="k">$(</span>ethtool -i <span class="nv">$nic</span> <span class="p">|</span> awk <span class="s1">&#39;/bus-info/ {print $2}&#39;</span><span class="k">)</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">mac</span><span class="o">=</span><span class="k">$(</span>ip addr show <span class="nv">$nic</span> <span class="p">|</span> awk <span class="s1">&#39;/ether/ {print $2}&#39;</span><span class="k">)</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">ip</span><span class="o">=</span><span class="k">$(</span>ip addr show <span class="nv">$nic</span> <span class="p">|</span> awk <span class="s1">&#39;/inet / {print $2}&#39;</span><span class="k">)</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">echo</span> <span class="s2">&#34;网卡名称: </span><span class="nv">$nic</span><span class="s2"> PCI编号: </span><span class="nv">$pci</span><span class="s2"> MAC地址: </span><span class="nv">$mac</span><span class="s2"> IP地址: </span><span class="nv">$ip</span><span class="s2">&#34;</span> &gt;&gt; <span class="nv">$log_file</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># down网卡</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> ip link show <span class="nv">$nic</span> <span class="p">|</span> grep -q <span class="s2">&#34;state UP&#34;</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">echo</span> <span class="s2">&#34;将网卡 </span><span class="nv">$nic</span><span class="s2"> 置为 down 状态&#34;</span>
+</span></span><span class="line"><span class="cl">        ip link <span class="nb">set</span> dev <span class="nv">$nic</span> down
+</span></span><span class="line"><span class="cl">    <span class="k">fi</span>
+</span></span><span class="line"><span class="cl"><span class="k">done</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 绑定网卡到用户选择的驱动</span>
+</span></span><span class="line"><span class="cl"><span class="k">for</span> nic in <span class="s2">&#34;</span><span class="si">${</span><span class="nv">selected_nics</span><span class="p">[@]</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">;</span> <span class="k">do</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">echo</span> <span class="s2">&#34;将网卡 </span><span class="nv">$nic</span><span class="s2"> 绑定到驱动 </span><span class="nv">$selected_drive</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">    sudo dpdk-devbind.py --bind<span class="o">=</span><span class="nv">$selected_drive</span> <span class="nv">$nic</span>
+</span></span><span class="line"><span class="cl"><span class="k">done</span>
+</span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1"># 配置大页</span>
-</span></span><span class="line"><span class="cl"><span class="k">function</span> setup_huge_pages <span class="o">{</span>
-</span></span><span class="line"><span class="cl">    <span class="c1"># 示例命令配置2GB的1G大页</span>
-</span></span><span class="line"><span class="cl">    sudo dpdk-hugepages.py -p 1G --setup 2G
-</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="o">[</span> <span class="nv">$?</span> -eq <span class="m">0</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
-</span></span><span class="line"><span class="cl">        <span class="nb">echo</span> <span class="s2">&#34;大页配置成功。&#34;</span>
-</span></span><span class="line"><span class="cl">    <span class="k">else</span>
-</span></span><span class="line"><span class="cl">        <span class="nb">echo</span> <span class="s2">&#34;配置大页失败，请检查错误。&#34;</span>
-</span></span><span class="line"><span class="cl">    <span class="k">fi</span>
-</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span><span class="line"><span class="cl"><span class="nb">echo</span> <span class="s2">&#34;正在配置大页...&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 示例命令配置2GB的1G大页</span>
+</span></span><span class="line"><span class="cl">sudo dpdk-hugepages.py -p 1G --setup 2G
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="o">[</span> <span class="nv">$?</span> -eq <span class="m">0</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">echo</span> <span class="s2">&#34;大页配置成功。&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="k">else</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">echo</span> <span class="s2">&#34;配置大页失败，请检查错误。&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="k">fi</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># 在执行完网络接口绑定之后，配置大页</span>
-</span></span><span class="line"><span class="cl"><span class="nb">echo</span> <span class="s2">&#34;开始配置大页...&#34;</span>
-</span></span><span class="line"><span class="cl">setup_huge_pages
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="nb">printf</span> <span class="s2">&#34;dpdk 配置完成\n&#34;</span>
-</span></span><span class="line"><span class="cl"><span class="nb">exit</span> <span class="m">0</span>
+</span></span><span class="line"><span class="cl"><span class="nb">echo</span> <span class="s2">&#34;配置dpdk完成&#34;</span>
 </span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="第一个测试程序">

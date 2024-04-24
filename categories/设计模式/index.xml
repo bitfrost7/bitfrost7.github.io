@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
         <title>设计模式 on 些许风霜</title>
-        <link>https://bitfrost7.github.io/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</link>
+        <link>http://localhost:1313/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</link>
         <description>Recent content in 设计模式 on 些许风霜</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>zh-cn</language>
         <copyright>bitfrost</copyright>
-        <lastBuildDate>Fri, 29 Mar 2024 22:24:18 +0800</lastBuildDate><atom:link href="https://bitfrost7.github.io/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Fri, 29 Mar 2024 22:24:18 +0800</lastBuildDate><atom:link href="http://localhost:1313/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>设计模式-单例</title>
-        <link>https://bitfrost7.github.io/p/design-patterns/singleton/</link>
+        <link>http://localhost:1313/p/design-patterns/singleton/</link>
         <pubDate>Fri, 29 Mar 2024 22:24:18 +0800</pubDate>
         
-        <guid>https://bitfrost7.github.io/p/design-patterns/singleton/</guid>
+        <guid>http://localhost:1313/p/design-patterns/singleton/</guid>
         <description>&lt;h2 id=&#34;介绍&#34;&gt;
     &lt;a href=&#34;#%e4%bb%8b%e7%bb%8d&#34;&gt;#&lt;/a&gt;
     介绍

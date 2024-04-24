@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
         <title>DNS on 些许风霜</title>
-        <link>https://bitfrost7.github.io/tags/dns/</link>
+        <link>http://localhost:1313/tags/dns/</link>
         <description>Recent content in DNS on 些许风霜</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>zh-cn</language>
         <copyright>bitfrost</copyright>
-        <lastBuildDate>Thu, 18 Apr 2024 16:45:14 +0800</lastBuildDate><atom:link href="https://bitfrost7.github.io/tags/dns/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Thu, 18 Apr 2024 16:45:14 +0800</lastBuildDate><atom:link href="http://localhost:1313/tags/dns/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>计算机网络-DNS协议</title>
-        <link>https://bitfrost7.github.io/p/network/dns/</link>
+        <link>http://localhost:1313/p/network/dns/</link>
         <pubDate>Thu, 18 Apr 2024 16:45:14 +0800</pubDate>
         
-        <guid>https://bitfrost7.github.io/p/network/dns/</guid>
+        <guid>http://localhost:1313/p/network/dns/</guid>
         <description>&lt;h1 id=&#34;dns协议&#34;&gt;
     &lt;a href=&#34;#dns%e5%8d%8f%e8%ae%ae&#34;&gt;#&lt;/a&gt;
     DNS协议
