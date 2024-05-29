@@ -10,7 +10,7 @@
 <meta property='og:description' content="dpdk学习01—环境搭建">
 <meta property='og:url' content='http://localhost:1313/p/network/dpdk/01/'>
 <meta property='og:site_name' content='些许风霜'>
-<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='dpdk' /><meta property='article:published_time' content='2024-04-22T19:16:59&#43;08:00'/><meta property='article:modified_time' content='2024-04-22T19:16:59&#43;08:00'/>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='dpdk' /><meta property='article:published_time' content='2024-04-02T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2024-04-22T19:16:59&#43;08:00'/>
 <meta name="twitter:title" content="dpdk学习01—环境搭建">
 <meta name="twitter:description" content="dpdk学习01—环境搭建">
     </head>
@@ -246,7 +246,13 @@
     <li><a href="#什么是dpdk">什么是dpdk？</a>
       <ol>
         <li><a href="#dpdk安装">dpdk安装</a></li>
-        <li><a href="#配置环境">配置环境</a></li>
+        <li><a href="#配置环境">配置环境</a>
+          <ol>
+            <li><a href="#安装驱动">安装驱动</a></li>
+            <li><a href="#绑定网卡">绑定网卡</a></li>
+            <li><a href="#设置hugepage">设置hugepage</a></li>
+          </ol>
+        </li>
       </ol>
     </li>
     <li><a href="#第一个测试程序">第一个测试程序</a></li>
@@ -296,7 +302,7 @@
   <path d="M3 11h16" />
   <path d="M18 16.496v1.504l1 1" />
 </svg>
-                <time class="article-time--published">Apr 22, 2024</time>
+                <time class="article-time--published">Apr 02, 2024</time>
             </div>
         
 
@@ -311,7 +317,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 4 分钟
+                    阅读时长: 3 分钟
                 </time>
             </div>
         
@@ -366,218 +372,120 @@
 </div><h3 id="配置环境">
     <a href="#%e9%85%8d%e7%bd%ae%e7%8e%af%e5%a2%83">#</a>
     配置环境
-</h3><p>dpdk环境最好配置2张网卡，一个选择桥接，用来配置dpdk开发；一个选择NAT，用来和宿主机连接。cpu选择4核，内存选择8G，按宿主机资源即可。
-配置dpdk环境需要2步：</p>
+</h3><p>dpdk环境最好配置2张网卡，一个选择桥接，用来配置dpdk开发，一个选择NAT，用来和宿主机连接。cpu选择4核，内存选择8G，按宿主机资源即可。
+启动dpdk环境需要3步：</p>
 <ol>
+<li>安装uio启动</li>
 <li>将网卡和dpdk绑定</li>
-<li>设置内存大页
-dpdk安装时已经自带了工具，可以很方便的配置：<br>
-<code>dpdk-devbind.py dpdk-hugepages.py</code>
-以下给出自己写的配置脚本：</li>
+<li>设置内存大页</li>
 </ol>
+<h4 id="安装驱动">
+    <a href="#%e5%ae%89%e8%a3%85%e9%a9%b1%e5%8a%a8">#</a>
+    安装驱动
+</h4><p>dpdk一般多采用两种驱动：vfio-pci和igb_uio。<br>
+vfio-pci:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
-</span><span class="lnt">16
-</span><span class="lnt">17
-</span><span class="lnt">18
-</span><span class="lnt">19
-</span><span class="lnt">20
-</span><span class="lnt">21
-</span><span class="lnt">22
-</span><span class="lnt">23
-</span><span class="lnt">24
-</span><span class="lnt">25
-</span><span class="lnt">26
-</span><span class="lnt">27
-</span><span class="lnt">28
-</span><span class="lnt">29
-</span><span class="lnt">30
-</span><span class="lnt">31
-</span><span class="lnt">32
-</span><span class="lnt">33
-</span><span class="lnt">34
-</span><span class="lnt">35
-</span><span class="lnt">36
-</span><span class="lnt">37
-</span><span class="lnt">38
-</span><span class="lnt">39
-</span><span class="lnt">40
-</span><span class="lnt">41
-</span><span class="lnt">42
-</span><span class="lnt">43
-</span><span class="lnt">44
-</span><span class="lnt">45
-</span><span class="lnt">46
-</span><span class="lnt">47
-</span><span class="lnt">48
-</span><span class="lnt">49
-</span><span class="lnt">50
-</span><span class="lnt">51
-</span><span class="lnt">52
-</span><span class="lnt">53
-</span><span class="lnt">54
-</span><span class="lnt">55
-</span><span class="lnt">56
-</span><span class="lnt">57
-</span><span class="lnt">58
-</span><span class="lnt">59
-</span><span class="lnt">60
-</span><span class="lnt">61
-</span><span class="lnt">62
-</span><span class="lnt">63
-</span><span class="lnt">64
-</span><span class="lnt">65
-</span><span class="lnt">66
-</span><span class="lnt">67
-</span><span class="lnt">68
-</span><span class="lnt">69
-</span><span class="lnt">70
-</span><span class="lnt">71
-</span><span class="lnt">72
-</span><span class="lnt">73
-</span><span class="lnt">74
-</span><span class="lnt">75
-</span><span class="lnt">76
-</span><span class="lnt">77
-</span><span class="lnt">78
-</span><span class="lnt">79
-</span><span class="lnt">80
-</span><span class="lnt">81
-</span><span class="lnt">82
-</span><span class="lnt">83
-</span><span class="lnt">84
-</span><span class="lnt">85
-</span><span class="lnt">86
-</span><span class="lnt">87
-</span><span class="lnt">88
-</span><span class="lnt">89
-</span><span class="lnt">90
-</span><span class="lnt">91
-</span><span class="lnt">92
-</span><span class="lnt">93
-</span><span class="lnt">94
-</span><span class="lnt">95
-</span><span class="lnt">96
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="cp">#!/bin/bash
-</span></span></span><span class="line"><span class="cl"><span class="cp"></span>
-</span></span><span class="line"><span class="cl"><span class="c1"># 获取所有网卡信息并存储为数组</span>
-</span></span><span class="line"><span class="cl"><span class="nv">nics</span><span class="o">=(</span><span class="k">$(</span>ip addr show <span class="p">|</span> grep ens <span class="p">|</span> awk <span class="s1">&#39;/^[0-9]+:/ {print $2}&#39;</span> <span class="p">|</span> sed <span class="s1">&#39;s/://&#39;</span><span class="k">)</span><span class="o">)</span>
-</span></span><span class="line"><span class="cl"><span class="c1"># 获取数组的长度</span>
-</span></span><span class="line"><span class="cl"><span class="nv">nic_nums</span><span class="o">=</span><span class="si">${#</span><span class="nv">nics</span><span class="p">[@]</span><span class="si">}</span>
-</span></span><span class="line"><span class="cl"><span class="c1"># 循环遍历每个网卡</span>
-</span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="o">((</span><span class="nv">i</span><span class="o">=</span>0<span class="p">;</span> i&lt;nic_nums<span class="p">;</span> i++<span class="o">))</span><span class="p">;</span> <span class="k">do</span>    
-</span></span><span class="line"><span class="cl">    <span class="nv">nic</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">nics</span><span class="p">[i]</span><span class="si">}</span><span class="s2">&#34;</span>
-</span></span><span class="line"><span class="cl">    <span class="c1"># 获取网卡的 MAC 地址</span>
-</span></span><span class="line"><span class="cl">    <span class="nv">mac</span><span class="o">=</span><span class="k">$(</span>ip addr show <span class="nv">$nic</span> <span class="p">|</span> awk <span class="s1">&#39;/ether/ {print $2}&#39;</span><span class="k">)</span>
-</span></span><span class="line"><span class="cl">    
-</span></span><span class="line"><span class="cl">    <span class="c1"># 获取网卡的 IP 地址和子网掩码</span>
-</span></span><span class="line"><span class="cl">    <span class="nv">ip</span><span class="o">=</span><span class="k">$(</span>ip addr show <span class="nv">$nic</span> <span class="p">|</span> awk <span class="s1">&#39;/inet / {print $2}&#39;</span><span class="k">)</span>
-</span></span><span class="line"><span class="cl">    
-</span></span><span class="line"><span class="cl">    <span class="c1"># 输出网卡信息</span>
-</span></span><span class="line"><span class="cl">    <span class="nb">echo</span> <span class="s2">&#34;</span><span class="k">$((</span>i+1<span class="k">))</span><span class="s2">, </span><span class="nv">$nic</span><span class="s2">: (</span><span class="nv">$ip</span><span class="s2"> </span><span class="nv">$mac</span><span class="s2">)&#34;</span>
-</span></span><span class="line"><span class="cl"><span class="k">done</span>
-</span></span><span class="line"><span class="cl"><span class="nb">echo</span> <span class="k">$((</span>nic_nums+1<span class="k">))</span>, all
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="nb">read</span> -p <span class="s2">&#34;请选择接口,多个使用空格隔开:&#34;</span> choice
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="nv">selected_nics</span><span class="o">=()</span>
-</span></span><span class="line"><span class="cl"><span class="c1"># 分割用户输入为数组</span>
-</span></span><span class="line"><span class="cl"><span class="nv">IFS</span><span class="o">=</span><span class="s1">&#39; &#39;</span> <span class="nb">read</span> -r -a choice_array <span class="o">&lt;&lt;&lt;</span> <span class="s2">&#34;</span><span class="nv">$choice</span><span class="s2">&#34;</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># 循环遍历用户选择的接口</span>
-</span></span><span class="line"><span class="cl"><span class="k">for</span> index in <span class="s2">&#34;</span><span class="si">${</span><span class="nv">choice_array</span><span class="p">[@]</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">;</span> <span class="k">do</span>
-</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="o">[</span> <span class="s2">&#34;</span><span class="nv">$index</span><span class="s2">&#34;</span> -eq <span class="s2">&#34;</span><span class="k">$((</span>nic_nums+1<span class="k">))</span><span class="s2">&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
-</span></span><span class="line"><span class="cl">        <span class="c1"># 用户选择了 &#34;all&#34;</span>
-</span></span><span class="line"><span class="cl">        <span class="nv">selected_nics</span><span class="o">+=(</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">nics</span><span class="p">[@]</span><span class="si">}</span><span class="s2">&#34;</span><span class="o">)</span>
-</span></span><span class="line"><span class="cl">        <span class="nb">break</span>
-</span></span><span class="line"><span class="cl">    <span class="k">elif</span> <span class="o">[</span> <span class="s2">&#34;</span><span class="nv">$index</span><span class="s2">&#34;</span> -ge <span class="m">1</span> <span class="o">]</span> <span class="o">&amp;&amp;</span> <span class="o">[</span> <span class="s2">&#34;</span><span class="nv">$index</span><span class="s2">&#34;</span> -le <span class="s2">&#34;</span><span class="nv">$nic_nums</span><span class="s2">&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
-</span></span><span class="line"><span class="cl">        <span class="c1"># 用户选择了具体的网卡</span>
-</span></span><span class="line"><span class="cl">        <span class="nv">selected_nic</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">nics</span><span class="p">[</span><span class="k">$((</span>index-1<span class="k">))</span><span class="p">]</span><span class="si">}</span><span class="s2">&#34;</span>
-</span></span><span class="line"><span class="cl">        <span class="nv">selected_nics</span><span class="o">+=(</span><span class="s2">&#34;</span><span class="nv">$selected_nic</span><span class="s2">&#34;</span><span class="o">)</span>
-</span></span><span class="line"><span class="cl">    <span class="k">else</span>
-</span></span><span class="line"><span class="cl">        <span class="nb">echo</span> <span class="s2">&#34;无效的选择: </span><span class="nv">$index</span><span class="s2">&#34;</span>
-</span></span><span class="line"><span class="cl">    <span class="k">fi</span>
-</span></span><span class="line"><span class="cl"><span class="k">done</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># 选择任一驱动</span>
-</span></span><span class="line"><span class="cl"><span class="nv">drives</span><span class="o">=(</span>igb_uio vfio-pci<span class="o">)</span>
-</span></span><span class="line"><span class="cl"><span class="nv">drive_nums</span><span class="o">=</span><span class="si">${#</span><span class="nv">drives</span><span class="p">[@]</span><span class="si">}</span>
-</span></span><span class="line"><span class="cl"><span class="nv">selected_drive</span><span class="o">=</span><span class="s2">&#34;&#34;</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="nb">echo</span> <span class="s2">&#34;可用的驱动：&#34;</span>
-</span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="o">((</span><span class="nv">i</span><span class="o">=</span>0<span class="p">;</span> i&lt;drive_nums<span class="p">;</span> i++<span class="o">))</span><span class="p">;</span> <span class="k">do</span>
-</span></span><span class="line"><span class="cl">    <span class="nb">echo</span> <span class="s2">&#34;</span><span class="k">$((</span>i+1<span class="k">))</span><span class="s2">, </span><span class="si">${</span><span class="nv">drives</span><span class="p">[i]</span><span class="si">}</span><span class="s2">&#34;</span>
-</span></span><span class="line"><span class="cl"><span class="k">done</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="nb">read</span> -p <span class="s2">&#34;请选择驱动 [1-</span><span class="nv">$drive_nums</span><span class="s2">]:&#34;</span> drive_choice
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="o">[</span> <span class="s2">&#34;</span><span class="nv">$drive_choice</span><span class="s2">&#34;</span> -ge <span class="m">1</span> <span class="o">]</span> <span class="o">&amp;&amp;</span> <span class="o">[</span> <span class="s2">&#34;</span><span class="nv">$drive_choice</span><span class="s2">&#34;</span> -le <span class="s2">&#34;</span><span class="nv">$drive_nums</span><span class="s2">&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
-</span></span><span class="line"><span class="cl">    <span class="nv">selected_drive</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">drives</span><span class="p">[</span><span class="k">$((</span>drive_choice-1<span class="k">))</span><span class="p">]</span><span class="si">}</span><span class="s2">&#34;</span>
-</span></span><span class="line"><span class="cl"><span class="k">else</span>
-</span></span><span class="line"><span class="cl">    <span class="nb">echo</span> <span class="s2">&#34;无效的选择: </span><span class="nv">$drive_choice</span><span class="s2">&#34;</span>
-</span></span><span class="line"><span class="cl">    <span class="nb">exit</span> <span class="m">1</span>
-</span></span><span class="line"><span class="cl"><span class="k">fi</span>
-</span></span><span class="line"><span class="cl"><span class="nb">echo</span> <span class="s2">&#34;您选择的驱动是: </span><span class="nv">$selected_drive</span><span class="s2">&#34;</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="nb">read</span> -p <span class="s2">&#34;记录网卡信息到 (默认: ./bind.log): &#34;</span> log_file
-</span></span><span class="line"><span class="cl"><span class="nv">log_file</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">log_file</span><span class="k">:-</span><span class="p">./bind.log</span><span class="si">}</span><span class="s2">&#34;</span>
-</span></span><span class="line"><span class="cl"><span class="c1"># 清空文件</span>
-</span></span><span class="line"><span class="cl">&gt; <span class="nv">$log_file</span>
-</span></span><span class="line"><span class="cl"><span class="k">for</span> nic in <span class="s2">&#34;</span><span class="si">${</span><span class="nv">selected_nics</span><span class="p">[@]</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">;</span> <span class="k">do</span>
-</span></span><span class="line"><span class="cl">    <span class="c1"># 记录网卡信息</span>
-</span></span><span class="line"><span class="cl">    <span class="nv">pci</span><span class="o">=</span><span class="k">$(</span>ethtool -i <span class="nv">$nic</span> <span class="p">|</span> awk <span class="s1">&#39;/bus-info/ {print $2}&#39;</span><span class="k">)</span>
-</span></span><span class="line"><span class="cl">    <span class="nv">mac</span><span class="o">=</span><span class="k">$(</span>ip addr show <span class="nv">$nic</span> <span class="p">|</span> awk <span class="s1">&#39;/ether/ {print $2}&#39;</span><span class="k">)</span>
-</span></span><span class="line"><span class="cl">    <span class="nv">ip</span><span class="o">=</span><span class="k">$(</span>ip addr show <span class="nv">$nic</span> <span class="p">|</span> awk <span class="s1">&#39;/inet / {print $2}&#39;</span><span class="k">)</span>
-</span></span><span class="line"><span class="cl">    <span class="nb">echo</span> <span class="s2">&#34;网卡名称: </span><span class="nv">$nic</span><span class="s2"> PCI编号: </span><span class="nv">$pci</span><span class="s2"> MAC地址: </span><span class="nv">$mac</span><span class="s2"> IP地址: </span><span class="nv">$ip</span><span class="s2">&#34;</span> &gt;&gt; <span class="nv">$log_file</span>
-</span></span><span class="line"><span class="cl">    <span class="c1"># down网卡</span>
-</span></span><span class="line"><span class="cl">    <span class="k">if</span> ip link show <span class="nv">$nic</span> <span class="p">|</span> grep -q <span class="s2">&#34;state UP&#34;</span><span class="p">;</span> <span class="k">then</span>
-</span></span><span class="line"><span class="cl">        <span class="nb">echo</span> <span class="s2">&#34;将网卡 </span><span class="nv">$nic</span><span class="s2"> 置为 down 状态&#34;</span>
-</span></span><span class="line"><span class="cl">        ip link <span class="nb">set</span> dev <span class="nv">$nic</span> down
-</span></span><span class="line"><span class="cl">    <span class="k">fi</span>
-</span></span><span class="line"><span class="cl"><span class="k">done</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># 绑定网卡到用户选择的驱动</span>
-</span></span><span class="line"><span class="cl"><span class="k">for</span> nic in <span class="s2">&#34;</span><span class="si">${</span><span class="nv">selected_nics</span><span class="p">[@]</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">;</span> <span class="k">do</span>
-</span></span><span class="line"><span class="cl">    <span class="nb">echo</span> <span class="s2">&#34;将网卡 </span><span class="nv">$nic</span><span class="s2"> 绑定到驱动 </span><span class="nv">$selected_drive</span><span class="s2">&#34;</span>
-</span></span><span class="line"><span class="cl">    sudo dpdk-devbind.py --bind<span class="o">=</span><span class="nv">$selected_drive</span> <span class="nv">$nic</span>
-</span></span><span class="line"><span class="cl"><span class="k">done</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># 配置大页</span>
-</span></span><span class="line"><span class="cl"><span class="nb">echo</span> <span class="s2">&#34;正在配置大页...&#34;</span>
-</span></span><span class="line"><span class="cl"><span class="c1"># 示例命令配置2GB的1G大页</span>
-</span></span><span class="line"><span class="cl">sudo dpdk-hugepages.py -p 1G --setup 2G
-</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="o">[</span> <span class="nv">$?</span> -eq <span class="m">0</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
-</span></span><span class="line"><span class="cl">    <span class="nb">echo</span> <span class="s2">&#34;大页配置成功。&#34;</span>
-</span></span><span class="line"><span class="cl"><span class="k">else</span>
-</span></span><span class="line"><span class="cl">    <span class="nb">echo</span> <span class="s2">&#34;配置大页失败，请检查错误。&#34;</span>
-</span></span><span class="line"><span class="cl"><span class="k">fi</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="nb">echo</span> <span class="s2">&#34;配置dpdk完成&#34;</span>
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">sudo modprobe vfio &amp;&amp; \
+</span></span><span class="line"><span class="cl">sudo modprobe vfio-pci
+</span></span><span class="line"><span class="cl"># 配置noiommu_mode。
+</span></span><span class="line"><span class="cl">sudo bash -c &#39;echo 1 &gt; /sys/module/vfio/parameters/enable_unsafe_noiommu_mode&#39;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>igb_uio:  ``</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">git clone https://dpdk.org/git/dpdk-kmods
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>下载以后make安装即可</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">pushd dpdk-kmods/linux/igb_uio
+</span></span><span class="line"><span class="cl">sudo make
+</span></span><span class="line"><span class="cl">sudo depmod &amp;&amp; sudo insmod igb_uio.ko
+</span></span><span class="line"><span class="cl">popd
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>或者直接<code>apt install dpdk-kmods-dkms</code></p>
+<h4 id="绑定网卡">
+    <a href="#%e7%bb%91%e5%ae%9a%e7%bd%91%e5%8d%a1">#</a>
+    绑定网卡
+</h4><p>使用dpdk安装自带了工具`dpdk-devbind.py直接配置：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">dpdk-devbind.py -s # 查看网卡绑定状态
+</span></span><span class="line"><span class="cl">dpdk-devbind.py -b vfio-pci 0000:03:00.0 # 将0000:03:00.0网卡绑到vfio-pci驱动
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="设置hugepage">
+    <a href="#%e8%ae%be%e7%bd%aehugepage">#</a>
+    设置hugepage
+</h4><p>x86架构CPU支持2M和1G大小的pagesize，一般linux默认配置了2M的大小，通过<code>cat /proc/meminfo|grep -i huge</code>来查看。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"># 挂载1G的hugepage
+</span></span><span class="line"><span class="cl">sudo mkdir /mnt/huge
+</span></span><span class="line"><span class="cl">sudo mount -t hugetlbfs -o pagesize=1G none /mnt/huge
+</span></span><span class="line"><span class="cl"># 设置巨页数量 以下都是在numa节点0上设置 如果设置其他节点可修改路径
+</span></span><span class="line"><span class="cl">sudo bash -c &#39;echo 2 &gt; /sys/kernel/mm/hugepages/hugepages-1048576kB/nr_hugepages&#39;
+</span></span><span class="line"><span class="cl">sudo bash -c &#39;echo 1024 &gt; /sys/kernel/mm/hugepages/hugepages-2048kB/nr_hugepages&#39;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>方便起见，写一个init脚本，方便快速拉起dpdk环境：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">modprobe vfio
+</span></span><span class="line"><span class="cl">modprobe vfio-pci
+</span></span><span class="line"><span class="cl"><span class="nb">echo</span> <span class="m">1</span> &gt; /sys/module/vfio/parameters/enable_unsafe_noiommu_mode
+</span></span><span class="line"><span class="cl">dpdk-devbind.py -b vfio-pci 0000:03:00.0
+</span></span><span class="line"><span class="cl">dpdk-devbind.py -b vfio-pci 0000:1a:00.0
+</span></span><span class="line"><span class="cl">mount -t hugetlbfs -o <span class="nv">pagesize</span><span class="o">=</span>1G none /mnt/huge
+</span></span><span class="line"><span class="cl"><span class="nb">echo</span> <span class="m">2</span> &gt; /sys/kernel/mm/hugepages/hugepages-1048576kB/nr_hugepages
+</span></span><span class="line"><span class="cl"><span class="nb">echo</span> <span class="m">1024</span> &gt; /sys/kernel/mm/hugepages/hugepages-2048kB/nr_hugepages
 </span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="第一个测试程序">
     <a href="#%e7%ac%ac%e4%b8%80%e4%b8%aa%e6%b5%8b%e8%af%95%e7%a8%8b%e5%ba%8f">#</a>
     第一个测试程序
 </h2><p>测试程序使用dpdk官方提供的testpmd，测试dpdk网卡绑定 。<br>
-因为网卡绑定到dpdk后无法查看ip和mac，所以绑定前需要保留这些信息，如果是运行脚本搭建，相关信息就在bind.log里。<br>
 测试环境： 两台虚拟机，要求都已经安装了dpdk的环境。</p>
 <h2 id="安装pktgen">
     <a href="#%e5%ae%89%e8%a3%85pktgen">#</a>
@@ -706,7 +614,19 @@ dpdk安装时已经自带了工具，可以很方便的配置：<br>
 
         <span>Licensed under CC BY-NC-SA 4.0</span>
     </section>
-    </footer>
+    <section class="article-lastmod">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+        <span>
+            最后更新于 Apr 22, 2024 19:16 CST
+        </span>
+    </section></footer>
 
 
     
@@ -723,12 +643,38 @@ dpdk安装时已经自带了工具，可以很方便的配置：<br>
             
                 
 <article class="">
+    <a href="/p/network/dpdk/03/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">dpdk学习03-cmdline源码解读</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
     <a href="/p/network/dpdk/02/">
         
         
 
         <div class="article-details">
             <h2 class="article-title">dpdk学习02-运行helloworld</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/p/network/dpdk/00/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">dpdk学习00—预备知识</h2>
         </div>
     </a>
 </article>

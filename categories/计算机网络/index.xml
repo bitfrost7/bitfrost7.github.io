@@ -7,7 +7,36 @@
         <generator>Hugo -- gohugo.io</generator>
         <language>zh-cn</language>
         <copyright>bitfrost</copyright>
-        <lastBuildDate>Mon, 22 Apr 2024 20:38:14 +0800</lastBuildDate><atom:link href="http://localhost:1313/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Thu, 25 Apr 2024 02:05:59 +0800</lastBuildDate><atom:link href="http://localhost:1313/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>dpdk学习00—预备知识</title>
+        <link>http://localhost:1313/p/network/dpdk/00/</link>
+        <pubDate>Thu, 25 Apr 2024 02:05:59 +0800</pubDate>
+        
+        <guid>http://localhost:1313/p/network/dpdk/00/</guid>
+        <description>&lt;h2 id=&#34;认识dpdk&#34;&gt;
+    &lt;a href=&#34;#%e8%ae%a4%e8%af%86dpdk&#34;&gt;#&lt;/a&gt;
+    认识dpdk
+&lt;/h2&gt;&lt;h3 id=&#34;传统网络的局限性&#34;&gt;
+    &lt;a href=&#34;#%e4%bc%a0%e7%bb%9f%e7%bd%91%e7%bb%9c%e7%9a%84%e5%b1%80%e9%99%90%e6%80%a7&#34;&gt;#&lt;/a&gt;
+    传统网络的局限性
+&lt;/h3&gt;&lt;h3 id=&#34;dpdk框架的由来&#34;&gt;
+    &lt;a href=&#34;#dpdk%e6%a1%86%e6%9e%b6%e7%9a%84%e7%94%b1%e6%9d%a5&#34;&gt;#&lt;/a&gt;
+    dpdk框架的由来
+&lt;/h3&gt;&lt;h3 id=&#34;dpdk的优势和现状&#34;&gt;
+    &lt;a href=&#34;#dpdk%e7%9a%84%e4%bc%98%e5%8a%bf%e5%92%8c%e7%8e%b0%e7%8a%b6&#34;&gt;#&lt;/a&gt;
+    dpdk的优势和现状
+&lt;/h3&gt;&lt;h2 id=&#34;相关术语介绍&#34;&gt;
+    &lt;a href=&#34;#%e7%9b%b8%e5%85%b3%e6%9c%af%e8%af%ad%e4%bb%8b%e7%bb%8d&#34;&gt;#&lt;/a&gt;
+    相关术语介绍
+&lt;/h2&gt;&lt;h2 id=&#34;c语言语法&#34;&gt;
+    &lt;a href=&#34;#c%e8%af%ad%e8%a8%80%e8%af%ad%e6%b3%95&#34;&gt;#&lt;/a&gt;
+    C语言语法
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;include guards&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        </item>
+        <item>
         <title>dpdk学习02-运行helloworld</title>
         <link>http://localhost:1313/p/network/dpdk/02/</link>
         <pubDate>Mon, 22 Apr 2024 20:38:14 +0800</pubDate>
@@ -138,11 +167,12 @@ dpdk框架主要组件有：&lt;/p&gt;
 &lt;/div&gt;&lt;p&gt;代码中关键在于：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;rte_eal_init();
-这个函数初始化dpdk EAL环境抽象层，开发必调函数。&lt;/li&gt;
+这个函数初始化dpdk EAL环境抽象层，必须存在的函数。&lt;/li&gt;
 &lt;li&gt;RTE_LCORE_FOREACH_SLAVE();
-实际上是一个for循环的宏，遍历所有的可用slave核。&lt;/li&gt;
+实际上是一个for循环的宏，遍历所有的可用slave核，需要传入一个循环变量lcore_id。&lt;/li&gt;
 &lt;li&gt;rte_eal_remote_launch();
-这个函数实际上就是让指定的slave核去执行函数，有些类似Golang中的go关键字。&lt;/li&gt;
+这个函数实际上就是让指定的slave核去执行函数，有些类似Golang中的go关键字。
+第一个参数是f，执行的函数，这个函数接受一个&lt;code&gt;void*&lt;/code&gt; 指针，返回一个int，第二个参数是&lt;code&gt;void *&lt;/code&gt;，是回调函数的参数，第三个参数是运行函数的逻辑核id。&lt;/li&gt;
 &lt;li&gt;rte_eal_mp_wait_lcore();
 这个函数实际上就是等待所有核上的任务执行完成。类似go中的waitgroup。&lt;/li&gt;
 &lt;/ul&gt;
@@ -258,7 +288,7 @@ dpdk框架主要组件有：&lt;/p&gt;
 &lt;/div&gt;&lt;h3 id=&#34;开发环境搭建&#34;&gt;
     &lt;a href=&#34;#%e5%bc%80%e5%8f%91%e7%8e%af%e5%a2%83%e6%90%ad%e5%bb%ba&#34;&gt;#&lt;/a&gt;
     开发环境搭建
-&lt;/h3&gt;&lt;p&gt;vscode + 远程开发remote-ssh插件&lt;/p&gt;
+&lt;/h3&gt;&lt;p&gt;clion+远程运行&lt;/p&gt;
 </description>
         </item>
         <item>
